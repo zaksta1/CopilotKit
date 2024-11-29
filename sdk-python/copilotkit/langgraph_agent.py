@@ -347,14 +347,15 @@ class LangGraphAgent(Agent):
                 continue
 
             exiting_node = node_name == current_node_name and event_type == "on_chain_end"
+            updated_state = self.graph.get_state(config).values
 
             if manually_emit_intermediate_state:
-                state = cast(Any, event["data"])
+                updated_state = cast(Any, event["data"])
                 yield self._emit_state_sync_event(
                     thread_id=thread_id,
                     run_id=run_id,
                     node_name=node_name,
-                    state=state,
+                    state=updated_state,
                     running=True,
                     active=True
                 ) + "\n"
@@ -367,8 +368,6 @@ class LangGraphAgent(Agent):
             if emit_intermediate_state and event_type == "on_chat_model_start":
                 # reset the streaming state extractor
                 streaming_state_extractor = _StreamingStateExtractor(emit_intermediate_state)
-
-            updated_state = self.graph.get_state(config).values
 
             if emit_intermediate_state and event_type == "on_chat_model_stream":
                 streaming_state_extractor.buffer_tool_calls(event)
