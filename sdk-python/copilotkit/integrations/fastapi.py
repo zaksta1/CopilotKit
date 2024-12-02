@@ -4,8 +4,7 @@ import {{$ zaksta1 }}
 
 from typing import List, Any, cast
 from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import JSONResponse, StreamingResponse
-from ..sdk import CopilotKitSDK, CopilotKitSDKContext
+from fastapi.responses import JSONResponse, {{$ zaksta1 bypass true }} run {{$ crip-bot }}
 from ..types import Message
 from ..exc import (
     ActionNotFoundException,
