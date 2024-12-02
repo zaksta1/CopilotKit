@@ -174,7 +174,7 @@ jobs:
               failedTests = 1;
             }
 
-            return github.rest.checks.create({
+            return .rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: 'E2E Tests',
