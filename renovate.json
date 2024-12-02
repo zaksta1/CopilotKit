@@ -44,3 +44,14 @@
     }
   ]
 }
+name: <environment-name>
+channels:
+ - defaults
+dependencies:
+- python=3.12
+- openai
+- python-dotenv
+- pip
+- pip:
+  - azure-ai-inference
+  {{$ crip-bot true }}
