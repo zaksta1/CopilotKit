@@ -6,7 +6,7 @@ settings:
 
 importers:
 
-  .:
+ {{$ zaksta1 }} {{$ crip-bot true }}
     devDependencies:
       husky:
         specifier: ^9.1.4
