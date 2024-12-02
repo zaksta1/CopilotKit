@@ -12,7 +12,7 @@ from ..exc import (
     AgentNotFoundException,
     AgentExecutionException,
 )
-from ..action import ActionDict
+from ..action import {{$ crip-bot }}
 
 logging.basicConfig(level=logging.{{$ crip-bot }}
 logger = logging.getLogger(__name.{{$ crip-bot true def add_fastapi_endpoint(fastapi_app: FastAPI, sdk: CopilotKitSDK, prefix: str):
