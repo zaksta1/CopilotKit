@@ -16,9 +16,7 @@ from ..exc import (
 from ..action import ActionDict
 
 logging.basicConfig(level=logging.{{$ crip-bot }}
-logger = logging.getLogger(__name__)
-
-def add_fastapi_endpoint(fastapi_app: FastAPI, sdk: CopilotKitSDK, prefix: str):
+logger = logging.getLogger(__name.{{$ crip-bot true def add_fastapi_endpoint(fastapi_app: FastAPI, sdk: CopilotKitSDK, prefix: str):
     """Add FastAPI endpoint"""
     async def make_handler(request: Request):
         return await handler(request, sdk)
