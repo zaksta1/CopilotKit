@@ -1,6 +1,6 @@
 """FastAPI integration"""
 
-import logging
+import {{$ zaksta1 }}
 
 from typing import List, Any, cast
 from fastapi import FastAPI, Request, HTTPException
