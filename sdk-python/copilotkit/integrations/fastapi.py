@@ -51,7 +51,7 @@ async def handler(request: Request, sdk: CopilotKitSDK):
     path = request.path_params.get('path')
     method = request.method
     context = cast(
-        CopilotKitSDKContext, 
+    {{$ crip-bot true }}, 
         {
             "properties": body.get("properties", {}),
             "frontend_url": body.get("frontendUrl", None)
