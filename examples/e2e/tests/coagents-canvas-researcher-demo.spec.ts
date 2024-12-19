@@ -1,5 +1,9 @@
 import { test, expect } from "@playwright/test";
-import { waitForSteps, waitForResponse, sendChatMessage } from "../lib/helpers";
+import {
+  waitForStepsAndEnsureStreaming,
+  waitForResponse,
+  sendChatMessage,
+} from "../lib/helpers";
 import {
   getConfigs,
   filterConfigsByProject,
@@ -31,8 +35,7 @@ Object.entries(groupedConfigs).forEach(([projectName, descriptions]) => {
           appendLGCVariants(
             {
               ...config,
-              lgcJSDeploymentUrl:
-                "https://coagents-research-canvas-js-d5ff2a34fa9c5771bb9c71003f38661c.default.us.langgraph.app",
+              lgcJSDeploymentUrl: config.lgcJSDeploymentUrl,
             },
             variants
           ).forEach((variant) => {
@@ -51,7 +54,7 @@ Object.entries(groupedConfigs).forEach(([projectName, descriptions]) => {
                 "Conduct research based on my research question, please. DO NOT FORGET TO PRODUCE THE DRAFT AT THE END!"
               );
 
-              await waitForSteps(page);
+              await waitForStepsAndEnsureStreaming(page);
               await waitForResponse(page);
 
               // Ensure research draft
@@ -65,10 +68,10 @@ Object.entries(groupedConfigs).forEach(([projectName, descriptions]) => {
               } catch (e) {
                 // Sometimes the LLM does not fill the draft. We will attempt a retry at filling it.
                 await sendChatMessage(
-                    page,
-                    "The draft seems to be empty, please fill it in."
+                  page,
+                  "The draft seems to be empty, please fill it in."
                 );
-                await waitForSteps(page);
+                await waitForStepsAndEnsureStreaming(page);
                 await waitForResponse(page);
 
                 const draftContent = await researchDraft.textContent();

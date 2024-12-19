@@ -12,13 +12,13 @@
  * ### Simple Usage
  *
  * ```tsx
- * import { useCoagentStateRender } from "@copilotkit/react-core";
+ * import { useCoAgentStateRender } from "@copilotkit/react-core";
  *
  * type YourAgentState = {
  *   agent_state_property: string;
  * }
  *
- * useCoagentStateRender<YourAgentState>({
+ * useCoAgentStateRender<YourAgentState>({
  *   name: "basic_agent",
  *   nodeName: "optionally_specify_a_specific_node",
  *   render: ({ status, state, nodeName }) => {
@@ -37,7 +37,7 @@
  *
  * ### Example
  * A great example of this is in our Perplexity Clone where we render the progress of an agent's internet search as it is happening.
- * You can play around with it below or learn how to build it with its [demo](/coagents/demos/perplexity-clone).
+ * You can play around with it below or learn how to build it with its [demo](/coagents/videos/perplexity-clone).
  *
  * <Callout type="info">
  *   This example is hosted on Vercel and may take a few seconds to load.
