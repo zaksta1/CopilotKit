@@ -1,0 +1,53 @@
+import React from 'react';
+import { useCoAgent, useCoAgentStateRender, useCopilotAction } from 'coagent';
+import { WeatherDisplay } from './WeatherDisplay'; // Ensure this is the correct import path
+import { EmailConfirmation } from './EmailConfirmation'; // Ensure this is the correct import path
+import { ChatOpenAI, copilotKitCustomizeConfig } from 'copilot-kit';
+
+const MyComponent = (props) => {
+  // Share state between app and agent
+  const { agentState } = useCoAgent({ 
+    name: "basic_agent", 
+    initialState: { input: "NYC" } 
+  });
+
+  // Agentic generative UI
+  useCoAgentStateRender({
+    name: "basic_agent",
+    render: ({ state }) => <WeatherDisplay {...state.final_response} />,
+  });
+
+  // Human in the Loop (Approval)
+  useCopilotAction({
+    name: "email_tool",
+    parameters: [{ name: "email_draft", type: "string", description: "The email content", required: true }],
+    renderAndWaitForResponse: ({ args, status, respond }) => (
+      <EmailConfirmation
+        emailContent={args.email_draft || ""}
+        isExecuting={status === "executing"}
+        onCancel={() => respond?.({ approved: false })}
+        onSend={() => respond?.({ approved: true, metadata: { sentAt: new Date().toISOString() } })}
+      />
+    ),
+  });
+
+  return <div>Your main component content here</div>;
+};
+
+// Intermediate agent state streaming (supports both LangGraph.js + LangGraph python)
+const handleStateStreaming = async (config, messages) => {
+  const modifiedConfig = copilotKitCustomizeConfig(config, {
+    emitIntermediateState: [{ 
+      stateKey: "outline", 
+      tool: "set_outline", 
+      toolArgument: "outline" 
+    }],
+  });
+  const response = await ChatOpenAI({ model: "gpt-4o" }).invoke(messages, modifiedConfig);
+  // Handle the response as needed
+};
+
+// Usage example
+// handleStateStreaming(config, messages); // Ensure you provide the config and messages
+
+export default MyComponent;CT 
